@@ -1,39 +1,29 @@
 package com.wn.example
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.wn.example.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        GlobalScope.launch {
-            test()
-        }
-
+        val binding:ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding.title  = "sss"
     }
 
-    fun flow(): Flow<String>{
-        return kotlinx.coroutines.flow.flow {
-            emit("sss")
+    suspend fun flow1() {
+        flow{
+            emit("test")
+        }.flowOn(Dispatchers.Main).collect {
+
         }
     }
 
-    suspend fun test(){
-        val str = withContext(Dispatchers.IO){
-
-        }
-
-        flow().collect {
-           Log.d("sss", it)
-        }
-
-    }
 
 
 }
