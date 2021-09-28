@@ -14,10 +14,9 @@ class HomePageViewModel @Inject constructor(var homeRepository: HomeRepository) 
     var liveHomeData: LiveData<String> = serverData
 
     fun getHomeData() {
-        serverData.postValue(homeRepository.reqUrl)
-//        launch(homeRepository, success = {
-//            serverData.postValue(it)
-//        })
+        launch(homeRepository,success = {
+            serverData.postValue(it)
+        })
     }
 
 }

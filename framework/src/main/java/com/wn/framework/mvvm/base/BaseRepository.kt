@@ -6,7 +6,5 @@ import kotlinx.coroutines.withContext
 interface BaseRepository<T> {
     val reqUrl: String
 
-    suspend fun execute() = withContext(Dispatchers.IO){
-            "TODO"
-    }
+    suspend fun execute(): String
 }
