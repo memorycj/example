@@ -8,22 +8,33 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import androidx.lifecycle.ViewModelProvider
+import com.wn.example.home.viewmodel.HomePageViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    var binding:ActivityMainBinding? = null
+
+    private lateinit var viewModel: HomePageViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding:ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        binding.title  = "sss"
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        viewModel = ViewModelProvider(this)[HomePageViewModel::class.java]
+        initData()
     }
 
-    suspend fun flow1() {
-        flow{
-            emit("test")
-        }.flowOn(Dispatchers.Main).collect {
-
-        }
+    private fun initData() {
+        viewModel.liveHomeData.observe(this,{
+            binding?.title = it
+        })
+        viewModel.getHomeData()
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding?.unbind()
+    }
 
 }

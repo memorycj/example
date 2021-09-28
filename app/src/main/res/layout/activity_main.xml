@@ -11,9 +11,6 @@
             name="title"
             type="String" />
 
-        <variable
-            name="userList"
-            type="List&lt;String" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -24,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{userList[0]}"
+            android:text="@{title}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
